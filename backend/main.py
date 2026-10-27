@@ -17,7 +17,7 @@ from pathlib import Path
 from typing import Any, Dict, List, Optional, Union
 
 import pandas as pd
-from fastapi import FastAPI, File, Form, HTTPException, UploadFile, status
+from fastapi import APIRouter, FastAPI, File, Form, HTTPException, Request, UploadFile, status
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
@@ -58,9 +58,30 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
+@app.middleware("http")
+async def restore_vercel_rewritten_path(request: Request, call_next):
+    """
+    Handle Vercel internal rewrites:
+    If a request was rewritten internally (e.g. to /api/index.py or /index.py),
+    restore the original requested path from Vercel's x-forwarded-uri or x-matched-path.
+    """
+    original_uri = request.headers.get("x-forwarded-uri") or request.headers.get("x-matched-path")
+    if original_uri:
+        path_only = original_uri.split("?")[0]
+        if request.url.path in ("/api/index.py", "/api/index", "/index.py", "/api/"):
+            request.scope["path"] = path_only
+    return await call_next(request)
+
+
+# APIRouter allows endpoints to be served both with and without the /api prefix,
+# guaranteeing routing success regardless of how Vercel rewrites internal paths.
+api_router = APIRouter()
+
 # In-memory candidate store for the current active screening session
 # Maps candidate_id (filename or string ID) -> candidate metadata dict
 CURRENT_SCREENING_CANDIDATES: Dict[str, Dict[str, Any]] = {}
+
 
 
 def parse_skills_field(val: Optional[Union[str, List[str]]]) -> Optional[List[str]]:
@@ -120,7 +141,7 @@ class RankRequest(BaseModel):
 # API ENDPOINTS
 # ============================================================================
 
-@app.get("/api/health")
+@api_router.get("/health")
 def health_check():
     """Health check endpoint returning system status and current upload session counts."""
     return {
@@ -132,7 +153,7 @@ def health_check():
     }
 
 
-@app.get("/api/categories")
+@api_router.get("/categories")
 def get_categories():
     """Return categories derived from active screening candidates, or taxonomy defaults."""
     if CURRENT_SCREENING_CANDIDATES:
@@ -157,7 +178,7 @@ def get_categories():
     }
 
 
-@app.post("/api/analyze-job")
+@api_router.post("/analyze-job")
 def analyze_job(request: AnalyzeJobRequest):
     """
     Analyze a job description text, extract skills, and identify
@@ -181,7 +202,7 @@ def analyze_job(request: AnalyzeJobRequest):
     return analysis
 
 
-@app.post("/api/upload-resumes")
+@api_router.post("/upload-resumes")
 async def upload_resumes(files: List[UploadFile] = File(...)):
     """
     Receive, validate, and parse multiple candidate resume documents (PDF & DOCX).
@@ -233,7 +254,7 @@ async def upload_resumes(files: List[UploadFile] = File(...)):
 
 
 
-@app.post("/api/screen")
+@api_router.post("/screen")
 async def screen_resumes_endpoint(
     job_description: Optional[str] = Form(None),
     jd_file: Optional[UploadFile] = File(None),
@@ -450,7 +471,7 @@ async def screen_resumes_endpoint(
     }
 
 
-@app.post("/api/rank")
+@api_router.post("/rank")
 def rank_job_candidates(request: RankRequest):
     """
     Rank candidate resumes against the job description using dual-method
@@ -571,7 +592,7 @@ def rank_job_candidates(request: RankRequest):
     }
 
 
-@app.get("/api/candidate/{candidate_id}")
+@api_router.get("/candidate/{candidate_id}")
 def get_candidate_details(candidate_id: str):
     """
     Retrieve candidate profile details for manual recruiter review.
@@ -615,14 +636,21 @@ def get_candidate_details(candidate_id: str):
     }
 
 
+# Include the API router both at /api and at root for full routing resilience on Vercel
+app.include_router(api_router, prefix="/api")
+app.include_router(api_router)
+
 
 # ============================================================================
 # STATIC FILES SERVING (FRONTEND)
 # ============================================================================
 
 frontend_path = PROJECT_ROOT / "frontend"
+if not frontend_path.exists() or not (frontend_path / "index.html").exists():
+    frontend_path = PROJECT_ROOT
 if frontend_path.exists() and (frontend_path / "index.html").exists():
     app.mount("/", StaticFiles(directory=str(frontend_path), html=True), name="frontend")
+
 
 
 if __name__ == "__main__":
