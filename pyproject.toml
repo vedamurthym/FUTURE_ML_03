@@ -1,6 +1,3 @@
-[tool.vercel]
-entrypoint = "app:app"
-
 [project]
 name = "resume-screening"
 version = "2.0.0"
