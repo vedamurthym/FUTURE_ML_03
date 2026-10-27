@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Resume Screening &amp; Candidate Matching System</title>
+  <meta name="description"
+    content="AI-powered resume screening and candidate ranking system using NLP and machine learning for intelligent recruitment." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+  <!-- Floating Botanical Citrus Background Elements -->
+  <div class="botanical-bg" aria-hidden="true">
+    <!-- Whole Lime on Stem with Leaves -->
+    <svg class="botanical-art botanical--lime-stem" viewBox="0 0 240 220" fill="none">
+      <path d="M110 170 C125 120 160 80 210 50" stroke="#485c08" stroke-width="4" stroke-linecap="round"/>
+      <!-- Leaves -->
+      <path d="M165 75 C145 45 180 20 205 35 C220 55 195 90 165 75 Z" fill="#BAD62C" stroke="#7e9c15" stroke-width="2"/>
+      <path d="M170 70 Q188 52 205 35" stroke="#68840d" stroke-width="1.5" fill="none"/>
+      <path d="M125 130 C90 115 105 80 135 90 C155 110 145 140 125 130 Z" fill="#c3de38" stroke="#7e9c15" stroke-width="2"/>
+      <path d="M128 126 Q132 108 135 90" stroke="#68840d" stroke-width="1.5" fill="none"/>
+      <!-- Whole Lime Fruit -->
+      <ellipse cx="95" cy="155" rx="55" ry="46" transform="rotate(-15 95 155)" fill="#BAD62C" stroke="#7f9b14" stroke-width="2.5"/>
+      <ellipse cx="90" cy="150" rx="46" ry="38" transform="rotate(-15 95 155)" fill="#c9e33c" opacity="0.6"/>
+      <path d="M48 152 Q44 153 42 150 Q45 146 49 148 Z" fill="#68840d"/>
+      <circle cx="85" cy="140" r="1.5" fill="#eefaa6" opacity="0.8"/>
+      <circle cx="105" cy="150" r="1.5" fill="#eefaa6" opacity="0.8"/>
+      <circle cx="78" cy="160" r="1.5" fill="#7f9b14" opacity="0.4"/>
+    </svg>
+
+    <!-- Large Sliced Lime Wheel -->
+    <svg class="botanical-art botanical--lime-slice" viewBox="0 0 220 220" fill="none">
+      <!-- Outer Rind -->
+      <circle cx="110" cy="110" r="102" fill="#BAD62C" stroke="#7e9c15" stroke-width="4"/>
+      <!-- Inner White Pith -->
+      <circle cx="110" cy="110" r="92" fill="#f2fcc2"/>
+      <!-- Pulp Base -->
+      <circle cx="110" cy="110" r="86" fill="#d2ed42"/>
+      <!-- Segments (Pulp Wedges) -->
+      <!-- Seg 1 -->
+      <path d="M110 110 L110 32 A78 78 0 0 1 165 54 Z" fill="#BAD62C" stroke="#f2fcc2" stroke-width="4"/>
+      <!-- Seg 2 -->
+      <path d="M110 110 L165 54 A78 78 0 0 1 188 110 Z" fill="#c4df33" stroke="#f2fcc2" stroke-width="4"/>
+      <!-- Seg 3 -->
+      <path d="M110 110 L188 110 A78 78 0 0 1 165 166 Z" fill="#BAD62C" stroke="#f2fcc2" stroke-width="4"/>
+      <!-- Seg 4 -->
+      <path d="M110 110 L165 166 A78 78 0 0 1 110 188 Z" fill="#c7e237" stroke="#f2fcc2" stroke-width="4"/>
+      <!-- Seg 5 -->
+      <path d="M110 110 L110 188 A78 78 0 0 1 55 166 Z" fill="#BAD62C" stroke="#f2fcc2" stroke-width="4"/>
+      <!-- Seg 6 -->
+      <path d="M110 110 L55 166 A78 78 0 0 1 32 110 Z" fill="#c3de30" stroke="#f2fcc2" stroke-width="4"/>
+      <!-- Seg 7 -->
+      <path d="M110 110 L32 110 A78 78 0 0 1 55 54 Z" fill="#BAD62C" stroke="#f2fcc2" stroke-width="4"/>
+      <!-- Seg 8 -->
+      <path d="M110 110 L55 54 A78 78 0 0 1 110 32 Z" fill="#c7e237" stroke="#f2fcc2" stroke-width="4"/>
+      <!-- Center Core Star -->
+      <circle cx="110" cy="110" r="14" fill="#f2fcc2"/>
+      <circle cx="110" cy="110" r="5" fill="#BAD62C"/>
+    </svg>
+
+    <!-- Lime Wedge Floating -->
+    <svg class="botanical-art botanical--lime-wedge" viewBox="0 0 140 100" fill="none">
+      <path d="M15 80 Q70 15 125 75 Z" fill="#BAD62C" stroke="#7e9c15" stroke-width="3"/>
+      <path d="M22 75 Q70 23 118 70 Z" fill="#f2fcc2"/>
+      <path d="M28 72 Q70 30 112 68 Z" fill="#c8e438"/>
+      <path d="M30 70 L68 70 L48 42 Z" fill="#BAD62C" stroke="#f2fcc2" stroke-width="2"/>
+      <path d="M72 70 L110 68 L88 40 Z" fill="#c2dd31" stroke="#f2fcc2" stroke-width="2"/>
+      <path d="M48 42 L70 34 L88 40 L70 70 Z" fill="#BAD62C" stroke="#f2fcc2" stroke-width="2"/>
+    </svg>
+
+    <!-- Drifting Leaves -->
+    <svg class="botanical-art botanical--leaf-1" viewBox="0 0 80 50" fill="none">
+      <path d="M10 25 C30 5 60 10 75 25 C60 45 30 40 10 25 Z" fill="#BAD62C" stroke="#7e9c15" stroke-width="2"/>
+      <path d="M10 25 Q45 22 75 25" stroke="#68840d" stroke-width="1.5" fill="none"/>
+    </svg>
+
+    <svg class="botanical-art botanical--leaf-2" viewBox="0 0 60 40" fill="none">
+      <path d="M5 20 C20 5 45 8 55 20 C45 35 20 32 5 20 Z" fill="#c6e336" stroke="#7e9c15" stroke-width="1.5"/>
+      <path d="M5 20 Q30 18 55 20" stroke="#68840d" stroke-width="1" fill="none"/>
+    </svg>
+
+    <!-- Lime-Green Strawberry Motif -->
+    <svg class="botanical-art botanical--strawberry" viewBox="0 0 90 100" fill="none">
+      <!-- Leaves on top -->
+      <path d="M45 25 C35 12 25 15 20 18 C30 25 40 26 45 25 Z" fill="#BAD62C" stroke="#7e9c15" stroke-width="1.5"/>
+      <path d="M45 25 C55 12 65 15 70 18 C60 25 50 26 45 25 Z" fill="#BAD62C" stroke="#7e9c15" stroke-width="1.5"/>
+      <path d="M45 25 C45 10 48 8 50 8" stroke="#485c08" stroke-width="2"/>
+      <!-- Berry Body -->
+      <path d="M22 30 C12 45 20 75 45 92 C70 75 78 45 68 30 C58 22 32 22 22 30 Z" fill="#BAD62C" stroke="#7e9c15" stroke-width="2"/>
+      <!-- Seeds -->
+      <circle cx="34" cy="42" r="1.5" fill="#68840d"/>
+      <circle cx="56" cy="42" r="1.5" fill="#68840d"/>
+      <circle cx="45" cy="52" r="1.5" fill="#68840d"/>
+      <circle cx="32" cy="62" r="1.5" fill="#68840d"/>
+      <circle cx="58" cy="62" r="1.5" fill="#68840d"/>
+      <circle cx="45" cy="74" r="1.5" fill="#68840d"/>
+    </svg>
+  </div>
+
+  <!-- ===== TOP NAVIGATION ===== -->
+  <nav id="main-nav">
+    <div class="nav-brand">
+      <span class="brand-text">FRUTTA<span class="brand-sub">SCREEN</span></span>
+      <span class="brand-dot">✦</span>
+    </div>
+    <ul class="nav-links">
+      <li><a href="#home" class="nav-link active" data-section="input-section">Home</a></li>
+      <li><a href="#skills" class="nav-link" data-section="skills-section">Skills</a></li>
+      <li><a href="#rankings" class="nav-link" data-section="results-section">Rankings</a></li>
+      <li><a href="#candidate" class="nav-link" data-section="candidate-section">Candidates</a></li>
+    </ul>
+    <div class="nav-status" id="nav-status">
+      <span class="status-dot"></span>
+      <span class="status-text">Connecting...</span>
+    </div>
+  </nav>
+
+  <!-- ===== HERO / INPUT SECTION ===== -->
+  <section id="input-section" class="section section--hero">
+    <div class="hero-grid">
+      <div class="hero-left">
+        <p class="hero-tagline">REAL TALENT. BRIGHTER TEAMS.</p>
+        <h1 class="hero-title">GOOD TALENT<br />BRIGHTER HIRES</h1>
+        <p class="hero-subtitle">intelligent resume screening &amp; candidate matching</p>
+        <p class="hero-description">
+          Paste a job description below. Our explainable NLP engine extracts skills,
+          evaluates candidates using TF-IDF text similarity and weighted skill coverage,
+          and ranks candidates transparently.
+        </p>
+      </div>
+
+
+    </div>
+
+    <!-- Job Description Input Area -->
+    <div class="input-area">
+      <div class="input-header-row">
+        <label for="jd-input" class="input-label">JOB DESCRIPTION</label>
+        <span class="input-badge-hint">Paste Text or Upload TXT / PDF</span>
+      </div>
+      <div class="jd-file-row" style="margin-bottom: 12px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+        <label for="jd-file-input" class="btn-folder-select" style="margin-bottom: 0; cursor: pointer;">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+            <polyline points="14 2 14 8 20 8"/>
+            <line x1="12" y1="18" x2="12" y2="12"/>
+            <line x1="9" y1="15" x2="15" y2="15"/>
+          </svg>
+          Upload JD File (.txt / .pdf)
+        </label>
+        <input type="file" id="jd-file-input" class="file-input-hidden" accept=".txt,.pdf,text/plain,application/pdf" />
+        <span id="jd-file-badge" class="queue-item-badge queue-item-badge--docx" style="display:none; font-size: 0.8rem; padding: 4px 10px;"></span>
+      </div>
+      <textarea id="jd-input" class="jd-textarea"
+        placeholder="Paste full job description requirements here, or click 'Upload JD File' above to load a .txt or .pdf file..."
+        rows="8"></textarea>
+      <div class="input-actions">
+        <span class="char-count" id="char-count">0 characters</span>
+        <button id="btn-analyze" class="btn btn--outline btn--small" style="display:none;">
+          Review Skills
+        </button>
+      </div>
+      <div id="input-error" class="error-message" style="display:none;"></div>
+    </div>
+
+    <!-- Resume Upload Area -->
+    <div class="upload-area" id="upload-area">
+      <div class="input-header-row">
+        <label class="input-label">UPLOAD CANDIDATE RESUMES</label>
+        <span class="input-badge-hint">PDF &amp; DOCX &bull; Max 10 MB per file</span>
+      </div>
+      <p class="upload-subtitle">
+        Select or drag-and-drop multiple candidate resumes to parse text and extract detected skills in-memory.
+      </p>
+
+      <!-- Drag & Drop Dropzone -->
+      <div class="dropzone" id="resume-dropzone">
+        <input type="file" id="resume-file-input" class="file-input-hidden" multiple accept=".pdf,.docx,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document" />
+        <input type="file" id="resume-folder-input" class="file-input-hidden" webkitdirectory directory multiple />
+        <div class="dropzone-content">
+          <div class="dropzone-icon-circle">
+            <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="2.2">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <polyline points="17 8 12 3 7 8"/>
+              <line x1="12" y1="3" x2="12" y2="15"/>
+            </svg>
+          </div>
+          <p class="dropzone-title">Drag &amp; drop resumes here, or <span class="dropzone-browse">browse files</span></p>
+          <p class="dropzone-folder-or">— or —</p>
+          <button type="button" class="btn-folder-select" id="btn-select-folder">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2">
+              <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>
+            </svg>
+            Select a Folder
+          </button>
+          <p class="dropzone-info">Supports <strong>PDF</strong> and <strong>DOCX</strong> (up to 10 MB each). Upload individual files or an entire folder of resumes.</p>
+        </div>
+      </div>
+
+      <!-- Selected Files Queue -->
+      <div class="upload-queue" id="upload-queue" style="display:none;">
+        <div class="queue-header">
+          <span class="queue-title" id="queue-count-label">Selected Resumes (0)</span>
+          <div class="queue-actions">
+            <button type="button" class="btn-text-action" id="btn-add-more-files">+ Add Files</button>
+            <button type="button" class="btn-text-action" id="btn-add-folder">+ Add Folder</button>
+            <button type="button" class="btn-text-action btn-text-action--danger" id="btn-clear-queue">Clear All</button>
+          </div>
+        </div>
+        <ul class="queue-file-list" id="queue-file-list"></ul>
+        
+        <div class="queue-footer">
+          <button type="button" id="btn-screen-resumes" class="btn btn--primary btn--large">
+            Screen Resumes
+            <span class="btn-arrow-pill">→</span>
+          </button>
+          <button type="button" id="btn-process-resumes" style="display:none;"></button>
+        </div>
+      </div>
+
+      <!-- Upload Error / Alert -->
+      <div id="upload-error" class="error-message" style="display:none;"></div>
+
+      <!-- Processed Upload Results -->
+      <div class="upload-results" id="upload-results" style="display:none;">
+        <div class="upload-results-header">
+          <div>
+            <h3 class="upload-results-title">Processed Resumes Summary</h3>
+            <p class="upload-results-desc">Text and skills extracted in-memory. Hover or expand text previews below.</p>
+          </div>
+          <div class="results-stats">
+            <span class="results-stat-pill" id="pill-upload-total"><strong>0</strong> Total</span>
+            <span class="results-stat-pill" id="pill-upload-valid"><strong>0</strong> Valid</span>
+            <span class="results-stat-pill" id="pill-upload-errors"><strong>0</strong> Failed</span>
+          </div>
+        </div>
+        <div class="processed-cards-list" id="processed-cards-list"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SKILLS REVIEW SECTION ===== -->
+  <section id="skills-section" class="section section--skills" style="display:none;">
+    <div class="section-header">
+      <div>
+        <p class="section-tag">STEP 2 &bull; SKILL SPECIFICATION</p>
+        <h2 class="section-title">CONFIRM &amp; EDIT REQUIREMENTS</h2>
+        <p class="section-desc">Review extracted skills. Move between essential and optional, or add custom skills before ranking.</p>
+      </div>
+      <div class="validation-messages" id="analysis-messages"></div>
+    </div>
+
+    <div class="skills-grid">
+      <!-- Extracted Skills Overview -->
+      <div class="skills-card skills-card--all">
+        <h3 class="skills-card-title">
+          <span class="card-title-icon">✦</span>
+          All Extracted Skills
+        </h3>
+        <div class="skills-by-category" id="skills-by-category"></div>
+      </div>
+
+      <!-- Essential Skills -->
+      <div class="skills-card skills-card--essential">
+        <h3 class="skills-card-title">
+          <span class="skill-badge skill-badge--essential">ESSENTIAL</span>
+          Must-Have Skills
+        </h3>
+        <p class="skills-card-hint">Candidates missing these receive a proportional coverage penalty.</p>
+        <div class="skills-tag-list" id="essential-skills-list"></div>
+        <div class="skill-add-row">
+          <input type="text" id="add-essential-input" class="skill-add-input" placeholder="Add essential skill..." />
+          <button id="btn-add-essential" class="btn btn--small btn--accent">+ Add</button>
+        </div>
+      </div>
+
+      <!-- Optional Skills -->
+      <div class="skills-card skills-card--optional">
+        <h3 class="skills-card-title">
+          <span class="skill-badge skill-badge--optional">OPTIONAL</span>
+          Nice-to-Have Skills
+        </h3>
+        <p class="skills-card-hint">Provides bonus points to break ties between strong candidates.</p>
+        <div class="skills-tag-list" id="optional-skills-list"></div>
+        <div class="skill-add-row">
+          <input type="text" id="add-optional-input" class="skill-add-input" placeholder="Add optional skill..." />
+          <button id="btn-add-optional" class="btn btn--small btn--accent">+ Add</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Ranking Filters & Action -->
+    <div class="filter-bar">
+      <div class="filter-group">
+        <label for="category-filter" class="filter-label">Filter Category</label>
+        <select id="category-filter" class="filter-select">
+          <option value="ALL">All Categories</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label for="min-score-filter" class="filter-label">Min Combined Score (0–100)</label>
+        <input type="number" id="min-score-filter" class="filter-input" value="0" min="0" max="100" step="5" />
+      </div>
+      <div class="filter-group">
+        <label for="top-n-filter" class="filter-label">Max Results</label>
+        <select id="top-n-filter" class="filter-select">
+          <option value="10">Top 10</option>
+          <option value="25">Top 25</option>
+          <option value="50" selected>Top 50</option>
+          <option value="100">Top 100</option>
+        </select>
+      </div>
+      <button id="btn-rank" class="btn btn--primary btn--large">
+        Analyze &amp; Rank Candidates
+        <span class="btn-arrow-pill">→</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- ===== LOADING OVERLAY ===== -->
+  <div id="loading-overlay" class="loading-overlay" style="display:none;">
+    <div class="loading-spinner">
+      <div class="spinner-ring"></div>
+      <p id="loading-text" class="loading-text">Processing...</p>
+    </div>
+  </div>
+
+  <!-- ===== RESULTS SECTION ===== -->
+  <section id="results-section" class="section section--results" style="display:none;">
+    <div class="section-header">
+      <div>
+        <p class="section-tag">STEP 3 &bull; RANKED CANDIDATES</p>
+        <h2 class="section-title">CANDIDATE MATCH RESULTS</h2>
+        <p class="section-desc" id="results-summary">Candidates ranked by dual-method match score.</p>
+      </div>
+      <div class="results-stats">
+        <div class="results-stat-pill" id="pill-evaluated">
+          <strong>0</strong> Evaluated
+        </div>
+        <div class="results-stat-pill" id="pill-matched">
+          <strong>0</strong> Matched
+        </div>
+        <div class="results-stat-pill" id="pill-returned">
+          <strong>0</strong> Returned
+        </div>
+      </div>
+    </div>
+
+    <!-- Score Distribution Chart -->
+    <div class="chart-container" id="chart-container">
+      <h3 class="chart-title">Score Distribution (Combined Match Score)</h3>
+      <canvas id="score-chart" height="200"></canvas>
+    </div>
+
+    <!-- Ethical AI / Compliance Disclaimer -->
+    <div class="disclaimer">
+      <strong>Compliance Notice:</strong> Match scores represent resume-to-job text alignment and skill coverage
+      derived from natural language processing. They do not constitute hiring recommendations or independently verified
+      competency. Final evaluation must involve qualified human recruiters.
+    </div>
+
+    <!-- Failed / Skipped Files Banner -->
+    <div id="results-failed-banner" class="error-message" style="display:none; margin-bottom: var(--space-md); border-left: 4px solid var(--crimson-red);"></div>
+
+    <!-- Live Results Filter Bar -->
+    <div class="results-filter-bar filter-bar" id="results-filter-bar" style="margin-bottom: var(--space-md);">
+      <div class="filter-group">
+        <label for="results-category-filter" class="filter-label">Filter Category</label>
+        <select id="results-category-filter" class="filter-select">
+          <option value="ALL">All Categories</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label for="results-min-score-filter" class="filter-label">Min Combined Score (0–100)</label>
+        <input type="number" id="results-min-score-filter" class="filter-input" value="0" min="0" max="100" step="5" />
+      </div>
+      <div class="filter-group">
+        <label for="results-top-n-filter" class="filter-label">Max Results</label>
+        <select id="results-top-n-filter" class="filter-select">
+          <option value="ALL">All Candidates</option>
+        </select>
+      </div>
+      <button id="btn-reset-filters" class="btn btn--outline btn--small" style="align-self: flex-end; margin-bottom: 2px;">
+        Reset Filters
+      </button>
+    </div>
+
+    <!-- Candidate Results Table -->
+    <div class="table-wrapper">
+      <table class="results-table">
+        <thead>
+          <tr>
+            <th>Rank</th>
+            <th>Resume Filename</th>
+            <th>Overall Score</th>
+            <th>Skill Score</th>
+            <th>Text Sim</th>
+            <th>Matched Essential</th>
+            <th>Missing Essential</th>
+            <th>Matched Optional</th>
+            <th>Explanation</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="results-tbody"></tbody>
+      </table>
+    </div>
+
+    <div id="empty-results" class="empty-state" style="display:none;">
+      <span class="empty-icon">🍃</span>
+      <h3 class="empty-title">No Candidates Matched</h3>
+      <p class="empty-desc">No resumes matched the selected category or minimum score threshold. Try loosening filters.</p>
+    </div>
+  </section>
+
+  <!-- ===== CANDIDATE DETAIL SECTION ===== -->
+  <section id="candidate-section" class="section section--candidate" style="display:none;">
+    <div class="section-header">
+      <div>
+        <p class="section-tag">STEP 4 &bull; CANDIDATE PROFILE</p>
+        <h2 class="section-title" id="candidate-detail-title">Candidate Details</h2>
+      </div>
+      <button id="btn-back-results" class="btn btn--outline btn--small">
+        &larr; Back to Results
+      </button>
+    </div>
+
+    <div class="candidate-grid">
+      <!-- Score Ring Cards -->
+      <div class="candidate-scores">
+        <div class="score-ring-card" id="score-combined">
+          <canvas width="120" height="120" class="score-ring"></canvas>
+          <span class="score-ring-label">Combined Score</span>
+        </div>
+        <div class="score-ring-card" id="score-skill">
+          <canvas width="120" height="120" class="score-ring"></canvas>
+          <span class="score-ring-label">Skill Match Score</span>
+        </div>
+        <div class="score-ring-card" id="score-text">
+          <canvas width="120" height="120" class="score-ring"></canvas>
+          <span class="score-ring-label">Text Similarity</span>
+        </div>
+      </div>
+
+      <!-- Candidate Metadata -->
+      <div class="candidate-profile-card">
+        <h3>Candidate Information</h3>
+        <div class="profile-row">
+          <span class="profile-key">Candidate ID</span>
+          <span class="profile-val" id="detail-id">—</span>
+        </div>
+        <div class="profile-row">
+          <span class="profile-key">Filename</span>
+          <span class="profile-val" id="detail-filename">—</span>
+        </div>
+        <div class="profile-row">
+          <span class="profile-key">Category</span>
+          <span class="profile-val" id="detail-category">—</span>
+        </div>
+        <div class="profile-row">
+          <span class="profile-key">Essential Coverage</span>
+          <span class="profile-val" id="detail-ess-cov">—</span>
+        </div>
+        <div class="profile-row">
+          <span class="profile-key">Optional Coverage</span>
+          <span class="profile-val" id="detail-opt-cov">—</span>
+        </div>
+      </div>
+
+      <!-- Match Explanation -->
+      <div class="candidate-explanation-card">
+        <h3>Match Explanation</h3>
+        <p id="detail-explanation" class="explanation-text">—</p>
+      </div>
+
+      <!-- Detailed Skill Coverage Breakdown -->
+      <div class="candidate-skills-detail">
+        <div class="skill-detail-card skill-detail-card--matched">
+          <h4>✓ Essential Matched</h4>
+          <div class="skill-pills" id="detail-ess-matched"></div>
+        </div>
+        <div class="skill-detail-card skill-detail-card--missing">
+          <h4>✗ Essential Missing</h4>
+          <div class="skill-pills" id="detail-ess-missing"></div>
+        </div>
+        <div class="skill-detail-card skill-detail-card--matched">
+          <h4>✓ Optional Matched</h4>
+          <div class="skill-pills" id="detail-opt-matched"></div>
+        </div>
+        <div class="skill-detail-card skill-detail-card--missing">
+          <h4>✗ Optional Missing</h4>
+          <div class="skill-pills" id="detail-opt-missing"></div>
+        </div>
+      </div>
+
+      <!-- Candidate Profile Details -->
+      <div class="candidate-resume-card" id="candidate-resume-card" style="display:none;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:var(--space-sm);">
+          <h3 style="margin:0;">Detected Skills &amp; Original Text</h3>
+          <span class="queue-item-size" id="detail-skill-count-badge" style="background:var(--blush-pink-light); padding:3px 10px; border-radius:12px; font-size:0.8rem; font-weight:600; color:var(--crimson-red);">
+            Skills detected: <span id="detail-skill-count">0</span>
+          </span>
+        </div>
+        <div class="profile-row" style="margin-bottom: var(--space-md);">
+          <span class="profile-key">All Detected Skills</span>
+          <span class="profile-val" id="detail-all-skills">—</span>
+        </div>
+        <!-- Collapsible Resume Preview (collapsed by default) -->
+        <details class="resume-preview-details" id="resume-preview-details">
+          <summary class="resume-preview-summary">View original resume text</summary>
+          <div class="resume-preview">
+            <p id="detail-text-preview" class="text-preview">—</p>
+          </div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer id="main-footer">
+    <div class="footer-content">
+      <div class="footer-brand">FRUTTA<span>SCREEN</span></div>
+      <p>AI-Powered Resume Screening &amp; Candidate Matching System</p>
+      <p class="footer-note">Match scores indicate resume-to-job text alignment, not hiring probability or independently verified competency.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+
+</html>

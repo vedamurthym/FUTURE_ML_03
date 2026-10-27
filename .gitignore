@@ -1,0 +1,34 @@
+# Virtual Environments
+venv/
+.venv/
+env/
+ENV/
+
+# Python cache & artifacts
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.pytest_cache/
+
+# Model & Artifact storage
+models/*.pkl
+models/*.joblib
+models/*.onnx
+
+# Data directory contents (keep folder structure, exclude large artifacts if generated)
+data/processed/*
+!data/processed/.gitkeep
+data/raw/*
+!data/raw/.gitkeep
+data/test_resumes/
+scripts/diagnostic_results.json
+scratch_prompt.txt
+
+# Streamlit run configs
+.streamlit/
+
+# OS-specific
+.DS_Store
+Thumbs.db
+
